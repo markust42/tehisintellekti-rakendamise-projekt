@@ -42,3 +42,7 @@ ENV/
 # OS
 .DS_Store
 Thumbs.db
+
+# Environment variables (API keys)
+.env
+.env.local
