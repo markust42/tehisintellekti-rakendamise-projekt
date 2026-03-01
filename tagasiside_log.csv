@@ -1,0 +1,158 @@
+Aeg,Kasutaja päring,Filtrid,Leitud ID-d,Leitud ained,LLM Vastus,Hinnang,Veatüüp
+2026-03-01 19:15:06,Tahan õppida pilverakenduste kohta,filtrid puuduvad,"['LTAT.06.008', 'LTAT.06.025', 'LOOM.03.087', 'LTOM.02.033', 'LTOM.02.061']","['Pilvetehnoloogia', 'Pilvepõhised rakendused Kubernetesel', 'Geoloogiline komplekspraktikum', 'Loodusgeograafia alused', 'Geosüsteemide modelleerimine']","
+Tere! Teie soovile vastavalt on mul teile kaks väga head kursust, mis keskenduvad pilverakendustele:
+
+1. **Pilvetehnoloogia (Cloud Computing)**
+   EAP: 6.0 | Semester: kevad | Keel: inglise keel | Õppeviis: lähiõpe
+   Kirjeldus: Aines kaetakse järgmised teemad: Pilvetehnoloogia, IaaS, PaaS, serverivabad rakendused, Mobiilpilve teenused, Uduarvutused ja Suurandmetöötluse lahendused nagu MapReduce, and Spark.
+
+2. **Pilvepõhised rakendused Kubernetesel (Cloud Native Applications on Kubernetes)**
+   EAP: 6.0 | Semester: sügis | Keel: inglise keel | Õppeviis: põimõpe
+   Kirjeldus: Konteinertehnoloogiad ja orkestreerimise lahendused, nagu Kubernetes, on tõhusate mikroteenuse-põhiste skaleeritavate ja tõrkekindlate rakenduste loomise nurgakiviks.
+
+Lisaks neile kahele on veel kolm kursust, mis võiksid huvi pakkuda, kuigi need ei keskendu otseselt pilverakendustele:
+
+3. **Geoloogiline komplekspraktikum (Field-training in Geology)**
+   EAP: 3.0 | Semester: kevad | Keel: eesti keel | Õppeviis: lähiõpe
+   Kirjeldus: Praktika käigus kirjeldatakse ja kaardistatakse Eesti ala iseloomulike geoloogiliste objektide ülikoolivälises töökeskkonnas erialaspetsialistide juhendamisel.
+
+4. **Loodusgeograafia alused (Introduction to Physical Geography)**
+   EAP: 6.0 | Semester: kevad | Keel: eesti keel | Õppeviis: põimõpe
+   Kirjeldus: Annab ülevaate atmosfääri, hüdrosfääri, pedosfääri ja biosfääri üldistest seaduspärasustest, kujunemisest ja arengust.
+
+5. **Geosüsteemide modelleerimine (Modelling of Geosystems)**
+   EAP: 3.0 | Semester: sügis | Keel: eesti keel | Õppeviis: põimõpe
+   Kirjeldus: Oskus dünaamiliste looduslike süsteemide modelleerimiseks ning mingi objekti praktiline modelleerimine.
+
+Millise kursuse kohta soovite rohkem teada saada?",👍 Hea,
+2026-03-01 19:21:24,Tahan õppida mobiilirakenduste kohta,filtrid puuduvad,"['SVNC.00.301', 'SVNC.00.057', 'LTAT.06.021', 'LTOM.02.050', 'LOTI.05.060']","['Mobiilirakenduste loomine', 'Mobiilirakenduste loomine', 'Mobiilirakenduste arendus', 'Geograafia, kommunikatsioon ja ruumiline mobiilsus', 'Nutilahenduste praktikum']","
+Tere!
+
+Arvestades sinu soovi õppida mobiilirakenduste kohta, olen leidnud 5 sobivat kursust:
+
+1. **Mobiilirakenduste loomine (Mobile Application Development)** - EAP: 6.0 | Semester: sügis | Keel: eesti keel | Õppeviis: põimõpe. Aines katab mobiilirakenduste, kasutajaliideste, Android platvormil arenduse, asukohapõhiste teenuste, mobiilse pilve ja mobiilsete rakenduste turustamise teemad. Eesmärgiks on anda ülevaade mobiilirakenduste loomise protsessist ja tutvustada rakenduste loomist Google Android platvormil.
+
+2. **Mobiilirakenduste loomine (Mobile Application Development)** - EAP: 4.0 | Semester: sügis | Keel: eesti keel | Õppeviis: lähiõpe. See kursus sarnaneb eelmisega, hõlmates samuti mobiilirakenduste loomist, kasutajaliidesi, Android platvormi arendust, asukohapõhiseid teenuseid, mobiilset pilve ja turustamist.
+
+3. **Mobiilirakenduste arendus (Mobile Application Development)** - EAP: 6.0 | Semester: sügis | Keel: inglise keel | Õppeviis: põimõpe. See kursus keskendub Android-platvormile, programmeerimisele Kotlinis, kasutajaliideste loomisele ja rakenduste testimisele. Samuti puudutatakse iOS platvormi ja mitme platvormi arendust.
+
+4. **Geograafia, kommunikatsioon ja ruumiline mobiilsus (Geography, Communication and Spatial Mobility)** - EAP: 6.0 | Semester: kevad | Keel: inglise keel | Õppeviis: põimõpe. See kursus vaatleb ruumilise mobiilsuse seost info- ja kommunikatsioonitehnoloogiaga ning positsioneerimise uuringute ja asukohapõhiste teenuste rakendusi.
+
+5. **Nutilahenduste praktikum (Smart Solutions)** - EAP: 3.0 | Semester: kevad | Keel: eesti keel, inglise keel | Õppeviis: põimõpe. Praktikum hõlmab asjade interneti (IoT) komponentide ühendamist reaalselt toimivateks süsteemideks, õpetades nutiseadmete juhtimist ja erinevate traadita side tehnoloogiate kasutamist.
+
+Loodan, et need kursused on sulle abiks! Kui soovid mõne kursuse kohta täpsemalt teada saada, küsi julgelt.
+",👍 Hea,
+2026-03-01 19:23:29,Tahan õppida närvivõrkude kohta,filtrid puuduvad,"['ARFS.01.069', 'MVBS.03.006', 'ARNR.01.024', 'ARNR.01.028', 'SVHI.03.035']","['Närviteadus', 'Närviteadus', 'Neuroloogia', 'Neuroloogia alused', 'Õppimine, õpetamine ja närviteadus']","
+Arvestades sinu soovi õppida närvivõrkude kohta, olen leidnud 5 kursust, mis võiksid sind huvitada:
+
+1. **Närviteadus (Neuroscience)**
+   EAP: 3.0 | Semester: sügis | Keel: eesti keel | Õppeviis: põimõpe
+   Kirjeldus: Närviteaduse kursus on mõeldud nii doktori- kui ka magistriõppele. Teoreetilises osas antakse ülevaade närviteaduse olulisematest teemadest, sealhulgas närvisüsteemis toimuvaid bioelektrilisi protsesse ja sünaptilist ülekannet, mis on närvivõrkude toimimise aluseks.
+
+2. **Närviteadus (Neuroscience)**
+   EAP: 3.0 | Semester: sügis | Keel: eesti keel | Õppeviis: põimõpe
+   Kirjeldus:  See kursus katab närviteaduse põhitopelt, mis sisaldab olulisi kontseptsioone ja meetodeid ajutalitluse ja käitumise uurimiseks, sealhulgas teadmisi närvivõrkude uurimismeetoditest.
+
+3. **Neuroloogia (Neurology)**
+   EAP: 2.0 | Semester: sügis | Keel: eesti keel | Õppeviis: põimõpe
+   Kirjeldus:  Kursus keskendub närvihaiguste sümptomaatikale ja diagnoosimise põhimõtetele, andes alusteadmised närvisüsteemi funktsioonist, mis on oluline närvivõrkude mõistmisel.
+
+4. **Neuroloogia alused (Principles of Neurology)**
+   EAP: 3.0 | Semester: kevad | Keel: eesti keel | Õppeviis: põimõpe
+   Kirjeldus: Kursus katab neuroloogia põhialuseid, sealhulgas närvisüsteemi talitluse põhimõtted ja närvihaiguste diagnoosimist, mis aitavad mõista närvivõrkude toimimist ja häireid.
+
+5. **Õppimine, õpetamine ja närviteadus (Learning, Teaching and Neuroscience)**
+   EAP: 3.0 | Semester: kevad | Keel: eesti keel | Õppeviis: põimõpe
+   Kirjeldus:  Ainekursus ""Õppimine, õpetamine ja närviteadus"" annab ülevaate õppimisest, ühendades teadmised kognitiivsest psühholoogiast, närvi- ja haridusteadusest, mis puudutab ka närvivõrkude seotust õppimisprotsessidega.
+
+Kui soovid, et ma läheksin mõne kursuse kirjeldusega rohkem detaili, küsi julgelt!",👎 Halb,Otsing leidis valed ained (RAG viga)
+2026-03-01 19:24:15,Tahan teha origamit,filtrid puuduvad,"['LTMS.00.086', 'LOKT.09.015', 'LTKT.09.003', 'MVSF.00.007', 'LOKT.09.042']","['Origami ja matemaatika: voltimise kunst ja teadus', 'Orgaanilise keemia praktikum', 'Orgaanilise sünteesi eripraktikum', 'Praktiline orienteerumine', 'Koolikeemia praktikum II']","Tere! Arvestades sinu soovi tegeleda origamiga, olen leidnud 5 kursust, mis võiksid sind huvitada.
+
+1. **Origami ja matemaatika: voltimise kunst ja teadus** (3.0 EAP, kevad, eesti keel, põimõpe) - See kursus tutvustab origamit kui interdistsiplinaarset tööriista, mis ühendab loovust, matemaatilisi kontseptsioone ja probleemilahendamise oskusi. Sa uurid origami ajalugu, matemaatilisi aluseid ja rakendust disainis, inseneriteadustes ja teadusuuringutes.
+
+2. **Praktiline orienteerumine** (2.0 EAP, kevad, eesti keel, veebiõpe) - Kuigi see otseselt origami ei puuduta, on see aktiivne kursus, mis arendab ruumilist mõtlemist ja orienteerumisvõimet, mis võib olla kasulik ka origami puhul.
+
+3. **Orgaanilise keemia praktikum** (3.0 EAP, sügis, eesti keel, põimõpe) - See kursus õpetab orgaaniliste ainete eraldamist, puhastamist ja analüüsi, mis võib olla huvitav, kui sind huvitab origami valmistamisel kasutatavate materjalide keemiline koostis.
+
+4. **Koolikeemia praktikum II** (3.0 EAP, sügis, eesti keel, põimõpe) - Samuti keemia valdkonnas, see praktikum võimaldab läbi viia olulisi katseid orgaanilise keemia valdkonnas, mis võib olla seotud origami valmistamisel kasutatavate ainete uuringuga.
+
+5. **Orgaanilise sünteesi eripraktikum** (9.0 EAP, kevad, eesti keel, põimõpe) - See on sügavama taseme praktikum orgaanilise keemia valdkonnas, mis hõlmab sünteesi planeerimist, läbiviimist ja struktuuranalüüsi.
+
+Eeldan, et ""Origami ja matemaatika: voltimise kunst ja teadus"" on sinu jaoks kõige sobivam valik, kuid teised kursused võivad olla täiendavaks huvialaks.
+",👎 Halb,LLM hallutsineeris/vastas valesti
+2026-03-01 19:27:24,Tahan ehitada lumememme,filtrid puuduvad,"['P2VK.04.292', 'LOTI.05.023', 'HVKU.04.053', 'LTFY.02.010', 'HVVK.04.098']","['Grimm ja parukad', 'Võistlusrobootika projekt', 'Hundid, mets ja inimesed: kunsti õpikoda', 'Ettevõtte loomise, juhtimise ja arendamise seminar I', 'Konstrueerimine']","Tere! Semantilise otsingu tulemusel leidsin 5 kursust, mis võiksid teid huvitada, kuivõrd teie soov on ""ehitada lumememme"". Arvestades, et lumememme ehitamine nõuab loovust, konstruktsiooni mõistmist ja võib-olla ka meeskonnatööd, on need kursused kõige sobilikumad:
+
+1. **Võistlusrobootika projekt** (6.0 EAP, sügis, eesti keel, inglise keel, põimõpe) – See kursus arendab oskusi elektroonikas, mehaanikas, projekti juhtimises ja meeskonnatöös. Lumememme ehitamise kontekstis võib siin arendada oskust luua ja ehitada lumememme erinevaid osasid.
+2. **Konstrueerimine** (1.5 EAP, kevad, eesti keel, põimõpe, rakenduskõrgharidusõpe) – Kursusel süvendatakse konstrueerimise ja konstruktsioonide joonestamise oskuseid, mis on kasulikud lumememme struktuursete omaduste planeerimisel.
+3. **Ettevõtte loomise, juhtimise ja arendamise seminar I** (3.0 EAP, sügis, inglise keel, põimõpe, magistriõpe) – Kuigi see kursus on seotud ettevõtlusega, õpetab see probleemide lahendamist ja tootearendust, mida saab rakendada lumememme ehituse optimeerimisel.
+4. **Grimm ja parukad** (1.5 EAP, sügis, eesti keel, lähiõpe, rakenduskõrgharidusõpe) – Kuigi ei tundu otseselt lumememme ehitamisega seotud, arendab see kursus loovust ja detailitähelepanu, mis on olulised lumememme kujundamisel.
+5. **Hundid, mets ja inimesed: kunsti õpikoda** (3.0 EAP, sügis, inglise keel, põimõpe) – See õpikoda aitab arendada tunnetuslikke meeli ja loovust, mis on lumememme ehitamisel olulised, et luua unikaalne ja väljendusrikas teos.
+
+Kas soovite mõne kursuse kohta rohkem teada saada?",👎 Halb,Otsing leidis valed ained (RAG viga)
+2026-03-01 23:53:09,Soovin õppida Pythonis programmeerimist,filtrid puuduvad,"['HVEE.04.028', 'P2NC.01.083_1', 'P2NC.01.083', 'LTOM.02.041', 'SVNC.00.228']","['Programmeerimine Pythonis tekstiandmetega', 'Objektorienteeritud programmeerimine', 'Objektorienteeritud programmeerimine', 'Ruumiandmete analüüs Pythoni ja R-iga', 'Sissejuhatus andmeteadusse']","
+• **Programmeerimine Pythonis tekstiandmetega (Programming in Python with Textual Data)**(https://ois2.ut.ee/#/courses/HVEE.04.028)
+   - Aine kood: HVEE.04.028
+   - EAP: 3.0 | Keel: eesti keel | Õppeviis: lähiõpe
+   - See kursus on hea valik, kui soovid täiendada oma programmeerimisoskust Pythonis ja keskenduda tekstiandmete töötlemisele. Sa õpid tegema analüüse ja töötlema teksti.
+   
+• **Objektorienteeritud programmeerimine (Object-oriented Programming)**(https://ois2.ut.ee/#/courses/P2NC.01.083)
+   - Aine kood: P2NC.01.083
+   - EAP: 6.0 | Keel: eesti keel, inglise keel | Õppeviis: põimõpe
+   -  See kursus annab alusteadmised objekt-orienteeritud programmeerimisest Pythonis, mis on oluline oskus sügavamaks sukeldumiseks programmeerimisse.
+   
+• **Objektorienteeritud programmeerimine (Object-oriented Programming)**(https://ois2.ut.ee/#/courses/P2NC.01.083)
+   - Aine kood: P2NC.01.083
+   - EAP: 6.0 | Keel: eesti keel, inglise keel | Õppeviis: põimõpe
+   -  See kursus annab alusteadmised objekt-orienteeritud programmeerimisest Pythonis, mis on oluline oskus sügavamaks sukeldumiseks programmeerimisse.
+
+• **Sissejuhatus andmeteadusse (Introduction to Data Science)**(https://ois2.ut.ee/#/courses/SVNC.00.228)
+   - Aine kood: SVNC.00.228
+   - EAP: 3.0 | Keel: inglise keel, eesti keel | Õppeviis: põimõpe
+   -  See kursus on hea, kui soovid alguses tutvuda Pythoni andmeteaduse teekidega ja mõista mudeleid. Sa õpid, kuidas andmeid ette valmistada ja töödelda.
+   
+• **Ruumiandmete analüüs Pythoni ja R-iga (Geospatial Analysis with Python and R)**(https://ois2.ut.ee/#/courses/LTOM.02.041)
+   - Aine kood: LTOM.02.041
+   - EAP: 6.0 | Keel: inglise keel | Õppeviis: põimõpe
+   - Kui sul on varasem programmeerimiskogemus, eriti Pythonis, siis pakub see kursus võimalust rakendada oma oskusi ruumiandmete analüüsis.",👎 Halb,Otsing leidis valed ained (RAG viga)
+2026-03-02 00:03:24,Tahan õppida uisutamist,filtrid puuduvad,"['KKSP.05.261', 'KKSP.04.102_1', 'KKSP.05.265', 'KKSP.04.102', 'LOFY.05.004']","['Veespordi algõpetus', 'Sõudmine algajatele', 'Suusatamise algõpetus', 'Sõudmine algajatele', 'Merefüüsika']","
+• **Suusatamise algõpetus (Skiing. Basic Course)**(https://ois2.ut.ee/#/courses/KKSP.05.265)
+   - Aine kood: KKSP.05.265
+   - EAP: 3.0 | Keel: eesti keel | Õppeviis: põimõpe | Semester: sügis
+   - See kursus õpetab murdmaasuusatamise tehnikaid, mis sisaldab ka uisutamist, ning tutvustab varustuse valikut ja hooldust. See on hea valik algajale, kes soovib alustada suusatajaga.
+",👎 Halb,Otsing leidis valed ained (RAG viga)
+2026-03-02 00:09:47,soovin ehitada iglu,filtrid puuduvad,"['HVVK.04.110', 'HVVK.04.098', 'HVVK.04.098_1', 'HVAJ.01.004', 'LOTI.05.021']","['Infotehnoloogia praktikum', 'Konstrueerimine', 'Konstrueerimine', 'Rauaaja tehnoloogiate praktika', 'Arvutiriistvara praktikum']","
+Sobivad kursused:
+
+- **Rauaaja tehnoloogiate praktika](https://ois2.ut.ee/#/courses/HVAJ.01.004)**
+   - Aine kood: HVAJ.01.004
+   - EAP: 3.0 | Keel: eesti keel | Õppeviis: lähiõpe | Semester: sügis
+   - Praktika võimaldab omandada ehitusega seotud rauaaegseid tehnoloogiaid, ehitades ja parandades muinastalus hooneid, mis on oluline kogemus iglu ehitamisel.
+
+- **Konstrueerimine](https://ois2.ut.ee/#/courses/HVVK.04.098)**
+   - Aine kood: HVVK.04.098
+   - EAP: 1.5 | Keel: eesti keel | Õppeviis: põimõpe | Semester: kevad/sügis
+   - Kursus süvendab konstrueerimise ja ruumilise kujutamise oskuseid, mis on vajalik iglu konstruktsiooni planeerimisel ja ehitamisel.
+",👎 Halb,Otsing leidis valed ained (RAG viga)
+2026-03-02 00:10:26,võrkpalli mängimine,filtrid puuduvad,"['KKSP.05.287', 'KKSP.05.309', 'ARSM.01.045', 'LOTI.05.023', 'MVSF.00.005']","['Sportmängude algõpetus I', 'Sportmängude algõpetus II', 'Spordimeditsiin, harrastusspordi võlud ja valud 2', 'Võistlusrobootika projekt', 'Võimlemise algõpetus']","
+Head valikut! Siin on kursused, mis võrkpalli mängimise sooviga sobivad:
+
+- **Sportmängude algõpetus I](https://ois2.ut.ee/#/courses/KKSP.05.287)**
+   - Aine kood: KKSP.05.287
+   - EAP: 3.0 | Keel: eesti keel | Õppeviis: põimõpe | Semester: sügis
+   - See kursus õpetab võrkpalli baastehnikaid ja -reegleid, mis on hea algus võrkpalliga alustamiseks.
+
+- **Sportmängude algõpetus II](https://ois2.ut.ee/#/courses/KKSP.05.309)**
+   - Aine kood: KKSP.05.309
+   - EAP: 3.0 | Keel: eesti keel | Õppeviis: põimõpe | Semester: kevad
+   - Jätkuks esimesele kursusele, andes sügavamaid teadmisi võrkpalli taktikast ja õpetamismetoodikatest.
+",👎 Halb,Otsing leidis valed ained (RAG viga)
+2026-03-02 00:11:43,"Oman saksa keeles B2 taset, mis kursuseid võiksin edasi võtta?",filtrid puuduvad,"['FLKE.02.278', 'HVLC.04.013', 'HVLC.04.011', 'HVLC.04.012', 'HVLC.04.010']","['Saksa keel algajatele II (süvaõpe), tase A1 > A2', 'Saksa keel kesktasemele II, tase B1.2 > B2.1', 'Saksa keel eelkesktasemele II, tase A2.2 > B1.1', 'Saksa keel kesktasemele I, tase B1.1 > B1.2', 'Saksa keel eelkesktasemele I, tase A2.1 > A2.2']","
+- **Saksa keel kesktasemele II, tase B1.2 > B2.1 (German for Intermediate Learners II, Level B1.2 > B2.1)**(https://ois2.ut.ee/#/courses/HVLC.04.013)
+   Aine kood: HVLC.04.013
+   EAP: 6.0 | Keel: saksa keel, eesti keel | Õppeviis: põimõpe | Semester: sügis
+   Kursus on mõeldud B1 taseme baasil jätkama ning aitab aktiivselt parandada keelekasutust ja laiendada sõnavara, mis on B2 tasemel edasi õppimiseks hea alus.
+
+- **Saksa keel kesktasemele I, tase B1.1 > B1.2 (German for Intermediate Learners I, Level B1.1 > B1.2)**(https://ois2.ut.ee/#/courses/HVLC.04.012)
+   Aine kood: HVLC.04.012
+   EAP: 6.0 | Keel: eesti keel, saksa keel | Õppeviis: lähiõpe | Semester: kevad
+   See kursus aitab tugevdada keeleoskus B1 tasemel ja valmistab sind paremini ette järgmiseks tasemeks, et saaksid B2 taset edukalt jätkata.",👎 Halb,Otsing leidis valed ained (RAG viga)

@@ -1,4 +1,6 @@
 import os
+import csv
+from datetime import datetime
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -8,6 +10,17 @@ from sklearn.metrics.pairwise import cosine_similarity
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# --- TAGASISIDE LOGIMISE FUNKTSIOON ---
+def log_feedback(timestamp, prompt, filters, context_ids, context_names, response, rating, error_category):
+    file_path = 'tagasiside_log.csv'
+    file_exists = os.path.isfile(file_path)
+
+    with open(file_path, 'a', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        if not file_exists:
+            writer.writerow(['Aeg', 'Kasutaja päring', 'Filtrid', 'Leitud ID-d', 'Leitud ained', 'LLM Vastus', 'Hinnang', 'Veatüüp'])
+        writer.writerow([timestamp, prompt, filters, str(context_ids), str(context_names), response, rating, error_category])
 
 st.title("🎓 AI Kursuse Nõustaja")
 st.caption("Semantiline otsing koos metaandmete filtreerimisega.")
@@ -69,7 +82,7 @@ with st.sidebar:
 
     st.divider()
     if st.button("🔄 Alusta otsast", use_container_width=True):
-        for key in ["messages", "total_tokens", "rag_context", "course_names"]:
+        for key in ["messages", "total_tokens", "rag_context", "course_names", "results_display", "filter_counts"]:
             st.session_state.pop(key, None)
         st.rerun()
 
@@ -94,6 +107,8 @@ if "rag_context" not in st.session_state:
     st.session_state.rag_context = None
 if "course_names" not in st.session_state:
     st.session_state.course_names = []
+if "results_display" not in st.session_state:
+    st.session_state.results_display = pd.DataFrame()
 
 # ---------------------------------------------------------------------------
 # Abifunktsioonid
@@ -127,14 +142,15 @@ def build_filter_mask(merged: pd.DataFrame) -> pd.Series:
 
 
 def do_rag(query: str, filtered_df: pd.DataFrame, n: int = 3):
-    """Semantiline otsing. Tagastab konteksti teksti ja kursuste nimed."""
+    """Semantiline otsing. Tagastab konteksti teksti, kursuste nimed ja tulemuste DataFrame."""
     if filtered_df.empty:
-        return None, []
+        return None, [], pd.DataFrame()
     query_vec = embedder.encode([query])[0]
     emb_matrix = np.stack(filtered_df["embedding"].values)
     scored = filtered_df.copy()
     scored["score"] = cosine_similarity([query_vec], emb_matrix)[0]
     results = scored.sort_values("score", ascending=False).head(n)
+    results_display = results.drop(columns=["embedding"], errors="ignore").copy()
     results = results.drop(columns=["score", "embedding", "unique_ID"], errors="ignore")
 
     lines = []
@@ -142,6 +158,7 @@ def do_rag(query: str, filtered_df: pd.DataFrame, n: int = 3):
     for i, (_, row) in enumerate(results.iterrows(), 1):
         name = row.get("nimi_et", row.get("nimi_en", "?"))
         name_en = row.get("nimi_en", "")
+        kood = row.get("aine_kood", "?")
         eap = row.get("eap", "?")
         sem = row.get("semester", "?")
         keel = row.get("keel", "?")
@@ -154,6 +171,7 @@ def do_rag(query: str, filtered_df: pd.DataFrame, n: int = 3):
 
         lines.append(
             f"{i}. {name} ({name_en})\n"
+            f"   Kood: {kood}\n"
             f"   EAP: {eap} | Semester: {sem} | Keel: {keel} | Õppeviis: {veebiope}\n"
             f"   Õppeaste: {oppeaste} | Linn: {linn}\n"
             f"   Kirjeldus: {kirjeldus}\n"
@@ -161,7 +179,7 @@ def do_rag(query: str, filtered_df: pd.DataFrame, n: int = 3):
             f"   Õpiväljundid: {opivaljundid}"
         )
         course_names.append(name)
-    return "\n\n".join(lines), course_names
+    return "\n\n".join(lines), course_names, results_display
 
 
 def call_llm_stream(client, messages_to_send):
@@ -191,37 +209,95 @@ def update_tokens(usage):
         st.session_state.total_tokens["completion"] += usage.completion_tokens or 0
 
 
-def build_system_prompt(context_text: str, course_names: list[str], active_filters: str) -> dict:
+def build_system_prompt(context_text: str, course_names: list[str], active_filters: str,
+                        total_count: int = 0, filtered_count: int = 0) -> dict:
     """Koostab süsteemi-prompti RAG kontekstiga."""
     allowlist = "\n".join(f"- {name}" for name in course_names)
+
+    if active_filters == "filtrid puuduvad":
+        filter_info = "Kasutaja ei rakendanud ühtegi metaandmete filtrit."
+    else:
+        filter_info = (
+            f"Kasutaja rakendas järgmised filtrid: {active_filters}.\n"
+            f"Filtrite tulemusel jäi andmestikku {filtered_count} kursust (kokku {total_count})."
+        )
+
     return {
         "role": "system",
         "content": (
-            f"Oled Tartu Ülikooli kursuste nõustaja. Sinu ülesanne on soovitada kasutajale kursuseid.\n\n"
-            f"Rakendatud filtrid: {active_filters}\n\n"
-            f"LUBATUD KURSUSED – sa tohid mainida AINULT neid {len(course_names)} kursust:\n"
+            f"Oled Tartu Ülikooli kursuste nõustaja. Sinu ülesanne on anda lakoonilisi ja selgeid soovitusi.\n\n"
+            f"{filter_info}\n\n"
+            f"Süsteem leidis semantilise otsingu abil {len(course_names)} potentsiaalset kursust:\n"
             f"{allowlist}\n\n"
-            f"TÄIELIKUD ANDMED NENDE KURSUSTE KOHTA:\n"
+            f"TÄIELIKUD ANDMED NENDE KOHTA:\n"
             f"{context_text}\n\n"
-            f"REEGLID:\n"
-            f"1. Soovita kasutajale maksimaalselt 3 kõige sobivamat kursust ülaltoodud nimekirjast.\n"
-            f"2. Kui ükski kursus ei sobi kasutaja päringuga hästi, ütle ausalt, et sobivaid kursuseid ei leidu "
-            f"ja soovita muuta filtreid või otsingulauset.\n"
-            f"3. Maini AINULT ülalloetletud kursuseid. Ära leiuta ega lisa omalt poolt kursuseid.\n"
-            f"4. Kasuta kursuse TÄPSET nime.\n"
-            f"5. Esita iga soovitatud kursuse kohta: nimi, EAP, semester, keel, õppeviis ja lühike kirjeldus.\n"
-            f"6. Kui kasutaja küsib jätkuküsimusi leitud kursuste kohta, vasta andmete põhjal.\n"
-            f"7. Vasta eesti keeles."
+            f"REEGLID LÕPLIKUKS VALIKUKS:\n"
+            f"1. Otsusta loetelu põhjal rangelt, millised kursused PÄRISELT sobivad kliendi sooviga.\n"
+            f"2. Esita asjakohased kursused konkreetsete ja lühikeste loetelupunktidena (bullet-points).\n"
+            f"3. Kui ükski ei sobi, ütle lihtsalt: Sobivaid kursuseid ei leidu.\n"
+            f"4. Sinu vastus EI TOHI sisaldada muid kursuseid peale nende, mis on nimekirjas.\n"
+            f"5. Iga sobiva kursuse juures pead väljastama JÄRGMISED read:\n"
+            f"   - **[Kursuse nimi](https://ois2.ut.ee/#/courses/[AINE_KOOD])** (Asenda [AINE_KOOD] leitud koodiga!)\n"
+            f"   - Aine kood: [Aine Kood]\n"
+            f"   - EAP: [EAP] | Keel: [Keel] | Õppeviis: [Õppeviis] | Semester: [Semester]\n"
+            f"   - 1-2 lauseline kokkuvõte, miks see spetsiifiliselt otsijale sobib, see eraldada eelnevast tekstist.\n"
+            f"6. Ära vabanda, ära räägi tehnilistest detailidest, filtritest, Andmebaasist ega RAG süsteemist."
+            f"7. Ole kasutajaga viisakas ja sõbralik, kuid ära lisa ebavajalikku teksti."
         ),
     }
 
 
 # ---------------------------------------------------------------------------
-# Vestluse ajaloo kuvamine
+# Vestluse ajaloo kuvamine koos kapotialuse info ja tagasiside vormidega
 # ---------------------------------------------------------------------------
-for message in st.session_state.messages:
+for i, message in enumerate(st.session_state.messages):
     with st.chat_message(message["role"]):
+        if message["role"] == "assistant" and "filter_msg" in message:
+            st.caption(message["filter_msg"])
+            
         st.markdown(message["content"])
+
+        if message["role"] == "assistant" and "debug_info" in message:
+            debug = message["debug_info"]
+
+            # 1. Kapoti all (RAG andmed JA süsteemiviip)
+            with st.expander("🔍 Vaata kapoti alla (RAG ja filtrid)"):
+                st.caption(f"**Aktiivsed filtrid:** {debug.get('filters', 'Info puudub')}")
+                st.write(f"Filtrid jätsid andmestikku alles **{debug.get('filtered_count', 0)}** kursust.")
+
+                st.write("**RAG otsingu tulemus (Top leitud kursust):**")
+                ctx_df = debug.get('context_df')
+                if ctx_df is not None and not ctx_df.empty:
+                    display_cols = ['unique_ID', 'nimi_et', 'eap', 'semester', 'oppeaste', 'score']
+                    cols_to_show = [c for c in display_cols if c in ctx_df.columns]
+                    st.dataframe(ctx_df[cols_to_show], hide_index=True)
+                else:
+                    st.warning("Ühtegi kursust ei leitud (kas filtrid olid liiga karmid või andmestik tühi).")
+
+                st.text_area(
+                    "LLM-ile saadetud täpne prompt:",
+                    debug.get('system_prompt', ''),
+                    height=150,
+                    disabled=True,
+                    key=f"prompt_area_{i}"
+                )
+
+            # 2. Tagasiside kogumine
+            with st.expander("📝 Hinda vastust (Salvestab logisse)"):
+                with st.form(key=f"feedback_form_{i}"):
+                    rating = st.radio("Hinnang vastusele:", ["👍 Hea", "👎 Halb"], horizontal=True, key=f"rating_{i}")
+                    kato = st.selectbox(
+                        "Kui vastus oli halb, siis mis läks valesti?",
+                        ["", "Filtrid olid liiga karmid/valed", "Otsing leidis valed ained (RAG viga)", "LLM hallutsineeris/vastas valesti"],
+                        key=f"kato_{i}"
+                    )
+                    if st.form_submit_button("Salvesta hinnang"):
+                        ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        ctx_df = debug.get('context_df')
+                        ctx_ids = ctx_df['unique_ID'].tolist() if (ctx_df is not None and not ctx_df.empty) else []
+                        ctx_names = ctx_df['nimi_et'].tolist() if (ctx_df is not None and not ctx_df.empty and 'nimi_et' in ctx_df.columns) else []
+                        log_feedback(ts, debug.get('user_prompt', ''), debug.get('filters', ''), ctx_ids, ctx_names, message["content"], rating, kato)
+                        st.success("Tagasiside salvestatud tagasiside_log.csv faili!")
 
 # ---------------------------------------------------------------------------
 # Kasutaja sisend
@@ -268,7 +344,10 @@ if prompt := st.chat_input("Kirjelda, mida soovid õppida..."):
                         active.append(f"EAP: {filter_eap[0]}–{filter_eap[1]}")
                     active_str = ", ".join(active) if active else "filtrid puuduvad"
 
-                    st.caption(f"Filtritele vastas **{filtered_count}** kursust {total_count}-st.")
+                    if active:
+                        filter_msg = f"Rakendatud filtrid jätsid andmestikku **{filtered_count}** kursust {total_count}-st."
+                    else:
+                        filter_msg = f"Otsitakse kõikide andmebaasi **{total_count}** kursuse hulgast."
 
                 if filtered_count == 0:
                     no_result = (
@@ -276,9 +355,10 @@ if prompt := st.chat_input("Kirjelda, mida soovid õppida..."):
                         "Proovi muuta filtreid külgribal või alusta otsast."
                     )
                     st.warning(no_result)
-                    st.session_state.messages.append({"role": "assistant", "content": no_result})
+                    st.session_state.messages.append({"role": "assistant", "content": no_result, "filter_msg": filter_msg})
                 else:
-                    context_text, course_names = do_rag(prompt, filtered_df, n=3)
+                    st.caption(filter_msg)
+                    context_text, course_names, results_display = do_rag(prompt, filtered_df, n=5)
 
                     if context_text is None:
                         no_result = "Sobivaid kursuseid ei leitud. Proovi muuta otsingupäringut või filtreid."
@@ -288,14 +368,29 @@ if prompt := st.chat_input("Kirjelda, mida soovid õppida..."):
                         # Salvesta RAG kontekst jätkuvestluse jaoks
                         st.session_state.rag_context = context_text
                         st.session_state.course_names = course_names
+                        st.session_state.results_display = results_display
+                        st.session_state.filter_counts = (total_count, filtered_count)
 
-                        system_prompt = build_system_prompt(context_text, course_names, active_str)
-                        messages_to_send = [system_prompt] + st.session_state.messages
+                        system_prompt = build_system_prompt(context_text, course_names, active_str,
+                                                           total_count, filtered_count)
+                        messages_to_send = [system_prompt] + [{"role": m["role"], "content": m["content"]} for m in st.session_state.messages]
 
                         try:
                             full_text, usage = call_llm_stream(client, messages_to_send)
                             update_tokens(usage)
-                            st.session_state.messages.append({"role": "assistant", "content": full_text})
+                            st.session_state.messages.append({
+                                "role": "assistant",
+                                "filter_msg": filter_msg,
+                                "content": full_text,
+                                "debug_info": {
+                                    "user_prompt": prompt,
+                                    "filters": active_str,
+                                    "filtered_count": filtered_count,
+                                    "context_df": results_display,
+                                    "system_prompt": system_prompt["content"]
+                                }
+                            })
+                            st.rerun()
                         except Exception as e:
                             st.error(f"Viga: {e}")
             else:
@@ -315,16 +410,29 @@ if prompt := st.chat_input("Kirjelda, mida soovid õppida..."):
                     active.append(f"EAP: {filter_eap[0]}–{filter_eap[1]}")
                 active_str = ", ".join(active) if active else "filtrid puuduvad"
 
+                tc, fc = st.session_state.get("filter_counts", (0, 0))
                 system_prompt = build_system_prompt(
                     st.session_state.rag_context,
                     st.session_state.course_names,
                     active_str,
+                    tc, fc,
                 )
-                messages_to_send = [system_prompt] + st.session_state.messages
+                messages_to_send = [system_prompt] + [{"role": m["role"], "content": m["content"]} for m in st.session_state.messages]
 
                 try:
                     full_text, usage = call_llm_stream(client, messages_to_send)
                     update_tokens(usage)
-                    st.session_state.messages.append({"role": "assistant", "content": full_text})
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": full_text,
+                        "debug_info": {
+                            "user_prompt": prompt,
+                            "filters": active_str,
+                            "filtered_count": len(st.session_state.results_display),
+                            "context_df": st.session_state.results_display,
+                            "system_prompt": system_prompt["content"]
+                        }
+                    })
+                    st.rerun()
                 except Exception as e:
                     st.error(f"Viga: {e}")
