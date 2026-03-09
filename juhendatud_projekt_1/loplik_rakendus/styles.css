@@ -1,0 +1,752 @@
+/* ================================================================
+   IMPORTS & CSS VARIABLES
+================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --purple-accent:  #b49ef5;
+    --purple-soft:    rgba(167, 139, 250, 0.18);
+    --text-primary:   #f2eeff;
+    --text-secondary: #b4abcc;
+    --text-muted:     #7a7090;
+    --radius-lg:      18px;
+    --radius-md:      13px;
+    --radius-sm:      9px;
+}
+
+/* ================================================================
+   BACKGROUND — vivid aurora orbs so glass actually has
+   something colourful to blur through
+================================================================ */
+.stApp {
+    background:
+        radial-gradient(ellipse 70% 55% at 8%  5%,  rgba(120, 60,  230, 0.55) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 45% at 92% 10%, rgba(90,  40,  200, 0.45) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 60% at 50% 95%, rgba(80,  20,  180, 0.50) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 72% 55%, rgba(160, 60,  255, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse 35% 35% at 20% 65%, rgba(100, 40,  200, 0.28) 0%, transparent 50%),
+        linear-gradient(160deg, #0c0716 0%, #100d1e 40%, #090612 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* ================================================================
+   GLOBAL TYPOGRAPHY + TRANSPARENT SCAFFOLDING
+================================================================ */
+html, body, [class*="css"] {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif !important;
+    color: var(--text-primary) !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Streamlit automatically links headers, hide the anchor icons */
+.stMarkdown a.header-anchor,
+a[data-testid="stHeaderAnchor"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Make every container transparent so the orbs bleed through */
+.main, .block-container,
+[data-testid="stAppViewContainer"],
+[data-testid="stVerticalBlock"],
+[data-testid="column"] {
+    background: transparent !important;
+}
+
+[data-testid="stBottom"] {
+    background: transparent !important;
+    padding-bottom: 2rem !important;
+    z-index: 100 !important;
+}
+
+[data-testid="stHeader"] {
+    background: transparent !important;
+    border-bottom: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    pointer-events: none !important;
+}
+/* Restore pointer events on the deploy button inside the header */
+[data-testid="stToolbar"],
+[data-testid="stToolbarActions"],
+.stDeployButton,
+[data-testid="stAppDeployButton"],
+[data-testid="stDeployButton"] {
+    pointer-events: auto !important;
+}
+#MainMenu { visibility: hidden; }
+footer    { visibility: hidden; }
+
+[data-testid="stSidebar"] {
+    background: rgba(110, 78, 190, 0.12) !important;
+    backdrop-filter: blur(34px) saturate(180%) brightness(1.08) !important;
+    -webkit-backdrop-filter: blur(34px) saturate(180%) brightness(1.08) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.16) !important;
+    box-shadow:
+        inset -1px 0 0 rgba(255, 255, 255, 0.12),
+        12px 0 32px rgba(0, 0, 0, 0.35) !important;
+    z-index: 999990 !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+[data-testid="stSidebar"] > div,
+[data-testid="stSidebar"] > div:first-child,
+[data-testid="stSidebar"] section,
+[data-testid="stSidebarContent"] {
+    background: transparent !important;
+}
+
+/* All text inside sidebar must be light */
+[data-testid="stSidebar"] *,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] span,
+[data-testid="stSidebar"] .stMarkdown {
+    color: var(--text-primary) !important;
+}
+[data-testid="stSidebar"] .stSelectbox label,
+[data-testid="stSidebar"] .stSlider label,
+[data-testid="stSidebar"] .stTextInput label {
+    color: var(--text-secondary) !important;
+}
+
+/* Sidebar toggle / collapsed control */
+[data-testid="collapsedControl"],
+[data-testid="stSidebarCollapsedControl"] {
+    color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(140, 100, 220, 0.30) !important;
+    border: 1px solid rgba(180, 150, 255, 0.35) !important;
+    border-radius: 50% !important;
+    margin: 10px !important;
+    z-index: 999999 !important;
+    visibility: visible !important;
+    display: flex !important;
+    transition: background 0.3s !important;
+}
+[data-testid="collapsedControl"]:hover,
+[data-testid="stSidebarCollapsedControl"]:hover {
+    background: rgba(140, 100, 220, 0.55) !important;
+}
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarCollapsedControl"] svg {
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+[data-testid="stSidebar"] [data-baseweb="input"],
+[data-testid="stSidebar"] [data-testid="stTextInputRootElement"] {
+    background: rgba(255, 255, 255, 0.09) !important;
+    border: 1px solid rgba(255, 255, 255, 0.20) !important;
+    border-radius: var(--radius-sm) !important;
+    backdrop-filter: blur(18px) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.14) !important;
+}
+[data-testid="stSidebar"] [data-baseweb="input"] > div,
+[data-testid="stSidebar"] [data-testid="stTextInputRootElement"] > div {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+[data-testid="stSidebar"] [data-baseweb="input"] input,
+[data-testid="stSidebar"] [data-testid="stTextInputRootElement"] input {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+}
+[data-testid="stSidebar"] [data-baseweb="input"] button,
+[data-testid="stSidebar"] [data-testid="stTextInputRootElement"] button {
+    background: transparent !important;
+    border-left: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 0 !important;
+    color: var(--text-secondary) !important;
+}
+
+/* ================================================================
+   MAIN CONTENT — tight centred column
+================================================================ */
+[data-testid="stAppViewContainer"] .main {
+    padding-top: 0 !important;
+}
+
+.main .block-container {
+    position: relative !important;
+    z-index: 100 !important;
+    padding-top: 1rem !important;
+    margin-top: 0 !important;
+    padding-bottom: 6rem !important;
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+/* ================================================================
+   GLASS UTILITY — reused everywhere
+================================================================ */
+.glass {
+    background:    rgba(140, 100, 220, 0.10);
+    backdrop-filter: blur(32px) saturate(180%) brightness(1.08);
+    -webkit-backdrop-filter: blur(32px) saturate(180%) brightness(1.08);
+    border:        1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-lg);
+    box-shadow:
+        inset 0 1px 0   rgba(255, 255, 255, 0.28),
+        inset 0 -1px 0  rgba(255, 255, 255, 0.06),
+        0 8px 32px      rgba(0, 0, 0, 0.40),
+        0 2px 8px       rgba(0, 0, 0, 0.25);
+}
+
+/* ================================================================
+   ALWAYS-VISIBLE CONTROL PANEL
+================================================================ */
+[data-testid="stVerticalBlockBorderWrapper"] {
+    background:      rgba(130, 90, 210, 0.13) !important;
+    backdrop-filter: blur(40px) saturate(200%) brightness(1.1) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.1) !important;
+    border:          1px solid rgba(255, 255, 255, 0.22) !important;
+    border-radius:   var(--radius-lg) !important;
+    padding:         1.2rem 1.5rem !important;
+    margin-bottom:   1.6rem !important;
+    box-shadow:
+        inset 0 1px 0  rgba(255, 255, 255, 0.32),
+        inset 0 0 50px rgba(140, 100, 255, 0.05),
+        0 12px 40px    rgba(0, 0, 0, 0.45),
+        0 2px 10px     rgba(0, 0, 0, 0.30) !important;
+    position: relative;
+    overflow: visible !important;
+}
+/* iridescent top shimmer on the panel */
+[data-testid="stVerticalBlockBorderWrapper"]::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 5%; right: 5%; height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(200, 160, 255, 0.65) 30%,
+        rgba(255, 255, 255, 0.85) 50%,
+        rgba(200, 160, 255, 0.65) 70%,
+        transparent);
+    border-radius: 1px;
+    pointer-events: none;
+}
+[data-testid="stVerticalBlockBorderWrapper"] > [data-testid="stVerticalBlock"] {
+    background: transparent !important;
+}
+
+.panel-section {
+    font-size:      0.72rem;
+    font-weight:    600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color:          var(--purple-accent);
+    margin-top:     0 !important;
+    margin-bottom:  0.65rem;
+}
+.glass-divider {
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.20) 30%,
+        rgba(200, 160, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0.20) 70%,
+        transparent);
+    margin: 1.1rem 0;
+}
+
+/* ================================================================
+   COMPACT HEADER TITLE
+================================================================ */
+.header-title {
+    font-size:   0.92rem;
+    font-weight: 600;
+    color:       var(--text-primary);
+    margin:      0;
+    padding-top: 0.42rem;
+    white-space: nowrap;
+    overflow:    hidden;
+    text-overflow: ellipsis;
+}
+.header-divider {
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.18) 30%,
+        rgba(200, 160, 255, 0.30) 50%,
+        rgba(255, 255, 255, 0.18) 70%,
+        transparent);
+    margin: 0.45rem 0 1.2rem 0;
+}
+
+/* ================================================================
+   CHAT MESSAGES — liquid glass cards
+================================================================ */
+.stChatMessage {
+    background:  rgba(140, 100, 220, 0.09) !important;
+    backdrop-filter: blur(28px) saturate(180%) brightness(1.06) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.06) !important;
+    border:        1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: var(--radius-lg) !important;
+    padding:       1.2rem 1.5rem !important;
+    margin-bottom: 0.9rem !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 8px 32px    rgba(0, 0, 0, 0.38),
+        0 2px 8px     rgba(0, 0, 0, 0.22) !important;
+    position: relative;
+    overflow: hidden;
+}
+.stChatMessage::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 8%; right: 8%; height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.35) 50%,
+        transparent);
+}
+/* user — faint warm tint */
+[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) {
+    background: rgba(100, 65, 200, 0.10) !important;
+    border-color: rgba(180, 150, 255, 0.18) !important;
+}
+/* assistant — cooler glass + accent left bar */
+[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) {
+    background: rgba(150, 110, 230, 0.11) !important;
+    border-left: 2px solid rgba(180, 150, 255, 0.50) !important;
+}
+/* Clear inner elements */
+[data-testid="stChatMessage"] > div,
+[data-testid="stChatMessage"] > div > div,
+[data-testid="stChatMessage"] .stMarkdown,
+[data-testid="stChatMessage"] [data-testid="stMarkdownContainer"],
+[data-testid="stChatMessage"] .element-container {
+    background: transparent !important;
+    text-shadow: none !important;
+}
+
+/* Avatars */
+[data-testid="chatAvatarIcon-user"] {
+    background: linear-gradient(135deg, rgba(110,75,200,0.65), rgba(80,50,160,0.45)) !important;
+    border: 1px solid rgba(180,150,255,0.35) !important;
+    color: #f8f4ff !important;
+    -webkit-text-fill-color: #f8f4ff !important;
+    filter: brightness(0) saturate(100%) invert(99%) sepia(45%) saturate(454%) hue-rotate(193deg) brightness(105%) contrast(100%) !important;
+}
+[data-testid="chatAvatarIcon-assistant"] {
+    background: linear-gradient(135deg, rgba(150,100,240,0.80), rgba(100,60,200,0.60)) !important;
+    border: 1px solid rgba(190,160,255,0.5) !important;
+    box-shadow: 0 0 14px rgba(150,100,240,0.40) !important;
+    color: #f8f4ff !important;
+    -webkit-text-fill-color: #f8f4ff !important;
+    filter: brightness(0) saturate(100%) invert(99%) sepia(45%) saturate(454%) hue-rotate(193deg) brightness(105%) contrast(100%) !important;
+}
+[data-testid="chatAvatarIcon-user"] svg,
+[data-testid="chatAvatarIcon-assistant"] svg {
+    fill: #f8f4ff !important;
+    stroke: #f8f4ff !important;
+    color: #f8f4ff !important;
+    opacity: 1 !important;
+}
+[data-testid="chatAvatarIcon-user"] *,
+[data-testid="chatAvatarIcon-assistant"] * {
+    fill: #f8f4ff !important;
+    stroke: #f8f4ff !important;
+    color: #f8f4ff !important;
+    -webkit-text-fill-color: #f8f4ff !important;
+    opacity: 1 !important;
+}
+[data-testid="chatAvatarIcon-user"] path,
+[data-testid="chatAvatarIcon-assistant"] path {
+    fill: #f8f4ff !important;
+    stroke: #f8f4ff !important;
+}
+[data-testid="stChatMessageAvatarUser"],
+[data-testid="stChatMessageAvatarAssistant"],
+[data-testid="stChatMessageAvatarUser"] *,
+[data-testid="stChatMessageAvatarAssistant"] * {
+    color: #f8f4ff !important;
+    fill: #f8f4ff !important;
+    stroke: #f8f4ff !important;
+    -webkit-text-fill-color: #f8f4ff !important;
+}
+[data-testid="stChatMessageAvatarUser"],
+[data-testid="stChatMessageAvatarAssistant"] {
+    width: 2rem !important;
+    min-width: 2rem !important;
+    height: 2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-top: 0.08rem !important;
+}
+[data-testid="stChatMessageAvatarUser"] img,
+[data-testid="stChatMessageAvatarAssistant"] img {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    min-width: 1.5rem !important;
+    min-height: 1.5rem !important;
+    display: block !important;
+    object-fit: contain !important;
+}
+[data-testid="stChatMessage"] {
+    align-items: flex-start !important;
+}
+[data-testid="chatAvatarIcon-user"] img,
+[data-testid="chatAvatarIcon-assistant"] img {
+    filter: brightness(0) saturate(100%) invert(99%) sepia(45%) saturate(454%) hue-rotate(193deg) brightness(105%) contrast(100%) !important;
+}
+
+/* ================================================================
+   CHAT INPUT — floating pill
+================================================================ */
+[data-testid="stBottom"] > div {
+    background: transparent !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+}
+
+[data-testid="stChatInput"] {
+    background:  rgba(130, 90, 210, 0.20) !important;
+    backdrop-filter: blur(36px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(36px) saturate(200%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    border-radius: 22px !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        0 8px 28px rgba(70, 40, 130, 0.30) !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+    overflow: hidden !important;
+}
+[data-testid="stChatInput"] > div {
+    border-radius: inherit !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+[data-testid="stChatInput"] form,
+[data-testid="stChatInput"] form > div,
+[data-testid="stChatInput"] [data-baseweb="textarea"],
+[data-testid="stChatInput"] [data-baseweb="textarea"] > div {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+[data-testid="stChatInput"]:focus-within {
+    border-color: rgba(180, 150, 255, 0.55) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        0 8px 32px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(160,120,255,0.4) !important;
+    border-radius: 22px !important;
+}
+[data-testid="stChatInput"] textarea {
+    color: var(--text-primary) !important;
+    font-size: 0.95rem !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+[data-testid="stChatInput"] textarea::placeholder {
+    color: var(--text-muted) !important;
+}
+[data-testid="stChatInput"]:has(textarea:disabled),
+[data-testid="stChatInput"][aria-disabled="true"] {
+    background: rgba(130, 90, 210, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 6px 22px rgba(70, 40, 130, 0.22) !important;
+}
+[data-testid="stChatInput"] textarea:disabled {
+    -webkit-text-fill-color: var(--text-secondary) !important;
+    opacity: 0.9 !important;
+}
+
+/* ================================================================
+   FORM INPUTS & SELECTS — closed-state glass
+================================================================ */
+.stTextInput > div > div > input,
+.stTextArea > div > div > textarea {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: var(--radius-sm) !important;
+    font-size: 0.87rem !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12) !important;
+    transition: border-color 0.2s, background 0.2s !important;
+}
+.stTextInput > div > div > input:focus,
+.stTextArea > div > div > textarea:focus {
+    border-color: rgba(180, 150, 255, 0.55) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.12),
+        0 0 0 2px rgba(160, 120, 255, 0.15) !important;
+    background: rgba(255, 255, 255, 0.11) !important;
+    outline: none !important;
+}
+.stSelectbox label, .stSlider label, .stTextInput label {
+    color: var(--text-secondary) !important;
+    font-size: 0.80rem !important;
+    font-weight: 400 !important;
+}
+
+/* ================================================================
+   BASE-WEB SELECTBOX — closed trigger button
+================================================================ */
+[data-baseweb="select"] {
+    background: transparent !important;
+}
+[data-baseweb="select"] > div,
+[data-baseweb="select"] > div:hover {
+    background:      rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) !important;
+    border-color:    rgba(255, 255, 255, 0.18) !important;
+    border-radius:   var(--radius-sm) !important;
+    box-shadow:      inset 0 1px 0 rgba(255,255,255,0.12) !important;
+    transition:      border-color 0.2s, background 0.2s !important;
+}
+[data-baseweb="select"] > div:focus-within {
+    border-color: rgba(180, 150, 255, 0.55) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.12),
+        0 0 0 2px rgba(160, 120, 255, 0.15) !important;
+    background: rgba(255, 255, 255, 0.11) !important;
+}
+[data-baseweb="select"] [data-testid="stSelectboxValue"],
+[data-baseweb="select"] span,
+[data-baseweb="select"] [aria-selected] {
+    color: var(--text-primary) !important;
+    font-size: 0.87rem !important;
+}
+[data-baseweb="select"] svg {
+    fill: var(--text-muted) !important;
+}
+
+/* ================================================================
+   BASE-WEB SELECTBOX — dropdown popup
+================================================================ */
+[data-baseweb="popover"],
+[data-baseweb="popover"] > div,
+[data-baseweb="menu"],
+ul[role="listbox"],
+[data-testid="stVirtualizedList"] {
+    background: rgba(54, 32, 97, 0.58) !important;
+    background-image: linear-gradient(145deg, rgba(150, 110, 235, 0.22), rgba(70, 40, 130, 0.24)) !important;
+    border: 1px solid rgba(190, 160, 255, 0.32) !important;
+    border-radius: var(--radius-md) !important;
+    backdrop-filter: blur(24px) saturate(170%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(170%) !important;
+}
+[data-baseweb="popover"] {
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        0 18px 44px rgba(35, 20, 72, 0.95),
+        0 4px 14px rgba(0, 0, 0, 0.5) !important;
+}
+[data-baseweb="menu"],
+ul[data-baseweb="menu"] {
+    background: transparent !important;
+    padding: 4px !important;
+}
+li[data-baseweb="option"],
+[role="option"] {
+    background:    transparent !important;
+    color:         #f2eeff !important;
+    border-radius: var(--radius-sm) !important;
+    font-size:     0.87rem !important;
+    padding:       0.45rem 0.75rem !important;
+    cursor:        pointer !important;
+    transition:    background 0.15s !important;
+}
+li[data-baseweb="option"]:hover,
+[role="option"]:hover {
+    background: rgba(140, 100, 220, 0.40) !important;
+    color:      #fff !important;
+}
+li[data-baseweb="option"][aria-selected="true"],
+[role="option"][aria-selected="true"] {
+    background: rgba(150, 100, 255, 0.28) !important;
+    color:      #fff !important;
+}
+
+/* ================================================================
+   SLIDER
+================================================================ */
+.stSlider > div > div > div > div {
+    background: linear-gradient(90deg, rgba(120,80,210,0.7), rgba(160,120,255,0.8)) !important;
+}
+
+/* ================================================================
+   BUTTONS
+================================================================ */
+.stButton > button {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(16px) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid rgba(255, 255, 255, 0.20) !important;
+    border-radius: var(--radius-sm) !important;
+    font-size: 0.84rem !important;
+    font-weight: 500 !important;
+    padding: 0.44rem 1rem !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.20),
+        0 2px 10px rgba(0,0,0,0.25) !important;
+    transition: background 0.18s, border-color 0.18s, transform 0.12s, box-shadow 0.18s !important;
+}
+.stButton > button:hover {
+    background: rgba(150, 100, 255, 0.18) !important;
+    border-color: rgba(190, 155, 255, 0.45) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.25),
+        0 6px 20px rgba(120, 70, 220, 0.28) !important;
+    transform: translateY(-1px) !important;
+}
+.stButton > button:active {
+    transform: translateY(0) !important;
+    background: rgba(150, 100, 255, 0.24) !important;
+}
+
+/* ================================================================
+   EXPANDERS — used for debug/feedback under messages
+================================================================ */
+[data-testid="stExpander"] {
+    background: rgba(120, 85, 200, 0.08) !important;
+    backdrop-filter: blur(28px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: var(--radius-md) !important;
+    margin-top: 0.55rem !important;
+    overflow: hidden;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        0 4px 16px rgba(0,0,0,0.28) !important;
+}
+.streamlit-expanderHeader {
+    background: transparent !important;
+    font-weight: 500 !important;
+    font-size: 0.84rem !important;
+    color: var(--text-secondary) !important;
+    padding: 0.7rem 1rem !important;
+}
+.streamlit-expanderHeader:hover { color: var(--text-primary) !important; }
+.streamlit-expanderContent {
+    border-top: 1px solid rgba(255,255,255,0.10) !important;
+    padding: 1rem !important;
+    background: rgba(0,0,0,0.06) !important;
+}
+
+/* ================================================================
+   METRIC CARDS
+================================================================ */
+[data-testid="metric-container"] {
+    background: rgba(130, 90, 210, 0.11) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 0.75rem 0.9rem !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.25),
+        0 4px 14px rgba(0,0,0,0.25) !important;
+}
+[data-testid="metric-container"] [data-testid="stMetricLabel"] {
+    font-size: 0.68rem !important;
+    color: var(--text-muted) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+}
+[data-testid="metric-container"] [data-testid="stMetricValue"] {
+    font-size: 1.15rem !important;
+    font-weight: 400 !important;
+    color: var(--text-primary) !important;
+}
+
+/* ================================================================
+   ALERTS
+================================================================ */
+.stAlert {
+    background: rgba(130, 90, 210, 0.09) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255,255,255,0.13) !important;
+    border-radius: var(--radius-md) !important;
+    color: var(--text-primary) !important;
+    font-size: 0.88rem !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15) !important;
+}
+
+/* ================================================================
+   DATAFRAME / TABLE
+================================================================ */
+[data-testid="stDataFrame"], .stTable {
+    border-radius: var(--radius-md) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    overflow: hidden !important;
+    background: rgba(120, 85, 200, 0.08) !important;
+    backdrop-filter: blur(18px) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+}
+
+.stProgress > div > div {
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+.stProgress > div > div > div,
+[data-testid="stProgressBar"] div[role="progressbar"] > div > div {
+    background: linear-gradient(90deg, #9b6cff, #c5a3ff) !important;
+    box-shadow: 0 0 10px rgba(160, 120, 255, 0.3) !important;
+}
+[data-testid="stProgressBar"] > div > div {
+    background: linear-gradient(90deg, #9b6cff, #c5a3ff) !important;
+}
+
+/* ================================================================
+   FORM CONTAINER
+================================================================ */
+[data-testid="stForm"] {
+    background: rgba(120, 85, 200, 0.07) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 1rem !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15) !important;
+}
+
+/* ================================================================
+   CAPTION / SMALL TEXT
+================================================================ */
+.stCaption, [data-testid="stCaptionContainer"] {
+    color: var(--text-muted) !important;
+    font-size: 0.77rem !important;
+}
+
+.usage-caption {
+    color: var(--text-secondary) !important;
+    font-size: 0.84rem !important;
+    margin: 0.25rem 0 0 0 !important;
+    font-weight: 500 !important;
+}
+
+/* ================================================================
+   SPINNER
+================================================================ */
+.stSpinner > div > div {
+    border-top-color: var(--purple-accent) !important;
+}
+
+/* ================================================================
+   RADIO
+================================================================ */
+.stRadio > div { gap: 0.5rem !important; }
+.stRadio label { font-size: 0.84rem !important; color: var(--text-secondary) !important; }
+
+/* ================================================================
+   SCROLLBAR
+================================================================ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(150,100,240,0.35); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(160,120,255,0.55); }

@@ -1,0 +1,9 @@
+FILTER_NONE = "Pole oluline"
+MODEL_NAME = "google/gemma-3-27b-it"
+DATA_CSV = "puhtad_andmed.csv"
+DATA_EMBEDDINGS = "puhtad_andmed_embeddings.pkl"
+LOG_FILE = "tagasiside_log.csv"
+TEST_CASES_FILE = "testjuhtumid.csv"
+EAP_DEFAULT = (1, 36)
+USER_AVATAR = "avatar_user.svg"
+ASSISTANT_AVATAR = "avatar_assistant.svg"
